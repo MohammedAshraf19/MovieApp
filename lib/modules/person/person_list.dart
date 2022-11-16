@@ -1,3 +1,4 @@
+import 'package:buildcondition/buildcondition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,54 +21,62 @@ class PersonList extends StatelessWidget {
           return Container(
             height: 116,
             padding: const EdgeInsets.only(left: AppSize.s16),
-            child: ListView.builder(
-              itemCount: cubit!.persons!.length,
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context,index){
-                return Container(
-                  padding: const EdgeInsets.only(
-                    top: AppSize.s8,
-                    right: AppSize.s8,
-                  ),
-                  child: Column(
-                    children: [
-                      cubit.persons![index].profileImage == null?
-                    const CircleAvatar(
-                    radius: 30,
-                   child: Icon(
-                     FontAwesomeIcons.user
-                   ),
-                  )
-                        :
-                      CircleAvatar(
-                        radius: 30,
-                        backgroundImage: NetworkImage(getMovieImageUrl+cubit.persons![index].profileImage),
+            child: BuildCondition(
+              condition: cubit!.persons!.length >0,
+              builder: (context)=>ListView.builder(
+                  itemCount: cubit.persons!.length,
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context,index){
+                    return Container(
+                      padding: const EdgeInsets.only(
+                        top: AppSize.s8,
+                        right: AppSize.s8,
                       ),
-                      const SizedBox(
-                        height: AppSize.s4,
+                      child: Column(
+                        children: [
+                          cubit.persons![index].profileImage == null?
+                          const CircleAvatar(
+                            radius: 30,
+                            child: Icon(
+                                FontAwesomeIcons.user
+                            ),
+                          )
+                              :
+                          CircleAvatar(
+                            radius: 30,
+                            backgroundImage: NetworkImage(getMovieImageUrl+cubit.persons![index].profileImage),
+                          ),
+                          const SizedBox(
+                            height: AppSize.s4,
+                          ),
+                          Text(
+                            cubit.persons![index].name,
+                            style: const TextStyle(
+                                color: ColorManager.white,
+                                fontSize: 8
+                            ),
+                          ),
+                          const SizedBox(
+                            height: AppSize.s4,
+                          ),
+                          Text(
+                            cubit.persons![index].known,
+                            style: TextStyle(
+                                color: ColorManager.lightGrey,
+                                fontSize: 8
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        cubit.persons![index].name,
-                        style: const TextStyle(
-                          color: ColorManager.white,
-                          fontSize: 8
-                        ),
-                      ),
-                      const SizedBox(
-                        height: AppSize.s4,
-                      ),
-                      Text(
-                        cubit.persons![index].known,
-                        style: TextStyle(
-                            color: ColorManager.lightGrey,
-                            fontSize: 8
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-                }
+                    );
+                  }
+              ),
+              fallback: (context)=>const Center(
+                child: CircularProgressIndicator(
+                    backgroundColor: ColorManager.primary,color: ColorManager.white
+                ),
+              ),
             ),
           );
       },

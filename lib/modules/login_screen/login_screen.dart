@@ -34,6 +34,7 @@ class LoginScreen extends StatelessWidget {
               showToast(txt: 'Access Login', state: ToastState.SUCCESS);
               uId = CacheHelper.getData(key: 'uId');
               MovieCubit.get(context).getUserData();
+              MovieCubit.get(context).getPersons();
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context)=>const MovieLayout())

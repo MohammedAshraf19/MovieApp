@@ -65,7 +65,7 @@ class MovieCubit extends Cubit<MovieStates>{
       url: getPopularMovieUrl,
     ).then((value) {
       popularMovie = MovieModel.fromJson(value.data);
-      emit(GetMoviePopularSuccess());
+     // emit(GetMoviePopularSuccess());
     }).catchError((error){
       emit(GetMoviePopularError());
     });
@@ -82,7 +82,6 @@ class MovieCubit extends Cubit<MovieStates>{
           emit(GetPlayingMovieError());
     });
   }
-
   GenreModel? genreModel;
   void getGenre(){
     DioHelperMovie.getData(
@@ -94,7 +93,6 @@ class MovieCubit extends Cubit<MovieStates>{
           emit(GetGenreError());
     });
   }
-
   PersonModel? personModel;
   void getPersons(){
     DioHelperMovie.getData(
@@ -107,7 +105,6 @@ class MovieCubit extends Cubit<MovieStates>{
       emit(GetPersonError());
     });
   }
-
 
   MovieModel? movieByGenre;
   void getMovieByGenre(int id){

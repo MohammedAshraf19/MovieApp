@@ -30,7 +30,7 @@ class MovieLayout extends StatelessWidget {
           state is! GetMovieLoading
               && state is! GetMovieError
               && state is! GetMovieSuccess
-             // && state is! GetUserDataSuccess
+              && state is! GetUserDataSuccess
               && state is! GetUserDataLoading ,
           builder: (context)=>Scaffold(
             appBar: AppBar(
